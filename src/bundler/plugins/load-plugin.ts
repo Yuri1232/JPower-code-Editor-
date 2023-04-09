@@ -1,55 +1,6 @@
-// import axios from "axios";
-// import * as esbulid from "esbuild-wasm";
-// import { esbuildCache } from "../store/brows-cache";
-
-// export const load_plugin = (code: string) => {
-//   return {
-//     name: "unpkg-path-npm",
-//     setup(build: esbulid.PluginBuild) {
-//       build.onLoad({ filter: /.*/ }, async (args: any) => {
-//         console.log("onLoad", args);
-
-//         if (args.path === "index.js") {
-//           return {
-//             loader: "jsx",
-//             contents: code,
-//           };
-//         }
-//         const getkeyStore = await esbuildCache.getItem<esbulid.OnLoadResult>(
-//           args.path
-//         );
-//         if (getkeyStore) {
-//           return getkeyStore;
-//         }
-//         const { data, request } = await axios.get(args.path);
-//         const loaderType = args.path.match(/.css$/) ? "css" : "jsx";
-//         // Trick esbuild => if the import is CSS then .css otherwise jsx
-//         const escaped = data
-//           .replace(/\n/g, "")
-//           .replace(/"/g, '\\"')
-//           .replace(/'/g, "\\'");
-//         const contents =
-//           loaderType === "css"
-//             ? `const element = document.createElement("style");
-//          element.innerText = '${escaped}'
-//          document.head.appendChild(element);
-//         `
-//             : data;
-//         const result: esbulid.OnLoadResult = {
-//           loader: "jsx",
-//           contents,
-//           resolveDir: new URL("./", request.responseURL).pathname,
-//         };
-//         await esbuildCache.setItem(args.path, result);
-//         return result;
-//       });
-//     },
-//   };
-// };
-
 import axios from "axios";
 import * as esbulid from "esbuild-wasm";
-import { esbuildCache } from "../store/brows-cache";
+import { esbuildCache } from "../../store/brows-cache";
 
 export const load_plugin = (code: string) => {
   return {
