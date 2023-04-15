@@ -1,4 +1,3 @@
-import { on } from "events";
 import { useEffect, useState } from "react";
 import { ResizableBox, ResizableBoxProps } from "react-resizable";
 
@@ -12,7 +11,7 @@ let resizableProps: ResizableBoxProps;
 const Reizable: React.FC<ReizableProps> = ({ direction, children }) => {
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   const [innerHeight, setInnerHeight] = useState(window.innerHeight);
-  const [widths, setWidth] = useState(window.innerWidth * 0.7);
+  const [widths, setWidth] = useState(window.innerWidth * 0.35);
   useEffect(() => {
     let timmer: any;
     if (timmer) {

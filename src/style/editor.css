@@ -1,25 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,700;1,400;1,600&family=Poppins:wght@900&display=swap");
 
-
-* , *::after, *::before{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html, body{
-    height: 100vh;
-    width: 100vw;
-}
-html{
-    font-size: 62.5%;
-}
-body{
-background: linear-gradient(to right, #485563, #29323c);
-font-family: 'Nunito', sans-serif;
-}
 
 .overview{
+    flex: 0 1 10%;
     display: flex;
     height: 100%;
     width: 100%;
@@ -27,6 +9,7 @@ font-family: 'Nunito', sans-serif;
   
 }
 .editor{
+
     position: relative;
     width:calc(100% - 12px);
   
@@ -63,10 +46,11 @@ width: 80px;
 
 .react-resizable-handle-s{
     background:url(../svgs/drag.svg);
-    background-color: #AEB6BF  ;
+    background-color: #000000  ;
     background-size: 20px;
     background-position: 50%;
     background-repeat: no-repeat;
+    border-radius: 0 0 5px 5px;
     display: block;
     height: 12px;
     width: 100%;
@@ -76,7 +60,7 @@ width: 80px;
 }
 .react-resizable-handle-e{
  background:url(../svgs/drag-horizontal-svgrepo-com\ \(1\).svg);
-    background-color:#AEB6BF  ;
+    background-color:#000000  ;
     background-size: 28px;
     background-position: 50%;
     background-repeat: no-repeat;
@@ -85,9 +69,34 @@ width: 80px;
     width: 12px;
     cursor: grab;
 }
-/* span{
+
+.loader{
+  flex-grow:1;
+   background-color:#EDEADE;
+  height: 100%;
+}
+.loader img{
+   height: inherit;
     display: block;
-   cursor: col-resize;
-   height: 2px;
-   
-} */
+    scale: .3;
+    object-fit: cover;
+    opacity:0;
+    margin: auto;
+    animation: loader .5s
+}
+
+@keyframes loader {
+    0%{
+        opacity: 0;
+    }
+    50%{
+        opacity: 0;
+    }
+
+    100%{
+        opacity: .8;
+    }
+    
+}
+
+

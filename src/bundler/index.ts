@@ -3,11 +3,11 @@ import { load_plugin } from "./plugins/load-plugin";
 import * as esbuild from "esbuild-wasm";
 
 let service: esbuild.Service;
-export default async (stringCode: string) => {
+export default async function bundler(stringCode: string) {
   if (!service) {
     service = await esbuild.startService({
       worker: true,
-      wasmURL: "/esbuild.wasm",
+      wasmURL: "https://unpkg.com/esbuild-wasm@0.8.27/esbuild.wasm",
     });
   }
   try {
@@ -18,16 +18,19 @@ export default async (stringCode: string) => {
       plugins: [unpkgPathPlugin(), load_plugin(stringCode)],
       define: {
         "process.env.NODE_ENV": '"production"',
+        global: "window",
       },
     });
+
     return {
       code: result.outputFiles[0].text,
       err: "",
     };
   } catch (error: any) {
+    console.log(error);
     return {
       code: "",
       err: error ? error.message : "",
     };
   }
-};
+}

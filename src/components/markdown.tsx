@@ -1,11 +1,15 @@
 import MDEditor from "@uiw/react-md-editor";
 import { useRef, useState, useEffect } from "react";
 import "./markdown.css";
+import { BindActions } from "../hooks/bindAction";
 
-const Markdown = () => {
+interface EditProps {
+  edit: any;
+}
+const Markdown: React.FC<EditProps> = ({ edit }) => {
   const [editing, setEditing] = useState(false);
-  const [value, setValue] = useState("header");
   const markdownElement = useRef<HTMLDivElement | null>(null);
+  const { updateCell } = BindActions();
 
   useEffect(() => {
     const listener = (event: MouseEvent) => {
@@ -28,16 +32,18 @@ const Markdown = () => {
   }, []);
 
   if (editing) {
-    console.log("ind", editing);
     return (
       <div className="editing" ref={markdownElement}>
-        <MDEditor value={value} onChange={(v) => setValue(v || "")} />
+        <MDEditor
+          value={edit.content}
+          onChange={(v: any) => updateCell(edit.id, v)}
+        />
       </div>
     );
   }
   return (
     <div className="markdown" onClick={() => setEditing(true)}>
-      <MDEditor.Markdown source={value} />
+      <MDEditor.Markdown source={edit.content || "Click to edit"} />
     </div>
   );
 };

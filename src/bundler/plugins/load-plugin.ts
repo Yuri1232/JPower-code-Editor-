@@ -1,11 +1,11 @@
 import axios from "axios";
-import * as esbulid from "esbuild-wasm";
+import * as esbuild from "esbuild-wasm";
 import { esbuildCache } from "../../store/brows-cache";
 
 export const load_plugin = (code: string) => {
   return {
-    name: "unpkg-path-npm",
-    setup(build: esbulid.PluginBuild) {
+    name: "fetch-plugin",
+    setup(build: esbuild.PluginBuild) {
       build.onLoad({ filter: /(^index\.js$)/ }, () => {
         return {
           loader: "jsx",
@@ -14,43 +14,46 @@ export const load_plugin = (code: string) => {
       });
 
       build.onLoad({ filter: /.*/ }, async (args: any) => {
-        const getkeyStore = await esbuildCache.getItem<esbulid.OnLoadResult>(
+        const cachedResult = await esbuildCache.getItem<esbuild.OnLoadResult>(
           args.path
         );
-        if (getkeyStore) {
-          return getkeyStore;
+
+        if (cachedResult) {
+          return cachedResult;
         }
       });
 
       build.onLoad({ filter: /.css$/ }, async (args: any) => {
         const { data, request } = await axios.get(args.path);
-        // Trick esbuild => if the import is CSS then .css otherwise jsx
         const escaped = data
           .replace(/\n/g, "")
           .replace(/"/g, '\\"')
           .replace(/'/g, "\\'");
         const contents = `
-         element.innerText = '${escaped}'
-         document.head.appendChild(element);
+          const style = document.createElement('style');
+          style.innerText = '${escaped}';
+          document.head.appendChild(style);
         `;
-        const result: esbulid.OnLoadResult = {
+        const result: esbuild.OnLoadResult = {
           loader: "jsx",
           contents,
           resolveDir: new URL("./", request.responseURL).pathname,
         };
         await esbuildCache.setItem(args.path, result);
+
         return result;
       });
 
       build.onLoad({ filter: /.*/ }, async (args: any) => {
         const { data, request } = await axios.get(args.path);
-        // Trick esbuild => if the import is CSS then .css otherwise jsx
-        const result: esbulid.OnLoadResult = {
+
+        const result: esbuild.OnLoadResult = {
           loader: "jsx",
           contents: data,
           resolveDir: new URL("./", request.responseURL).pathname,
         };
         await esbuildCache.setItem(args.path, result);
+
         return result;
       });
     },

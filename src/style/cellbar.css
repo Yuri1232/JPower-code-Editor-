@@ -1,0 +1,25 @@
+.buttons{
+    display: flex;
+    justify-content: flex-end;
+    max-width: 100%;
+    background-color:rgb(8, 8, 8);
+    gap: 1rem;
+    padding-right: 5px;
+  
+}
+
+.button{
+    
+    max-width: 3rem;
+    height: auto;
+    transition: transform .2s;
+    cursor: pointer;
+
+}
+.button:hover{
+    transform: scale(1.1);
+
+}
+.button:active{
+    transform: translateY(2px);
+}

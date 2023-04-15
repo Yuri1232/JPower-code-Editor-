@@ -1,0 +1,57 @@
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    z-index: 100;
+}
+.title{
+    font-size: 3rem;
+    font-family: 'Courier New', Courier, monospace;
+    white-space:pre;
+    letter-spacing: .3rem;
+    text-transform: uppercase;
+}
+.head-letter{
+    display: inline-block;
+   
+}
+
+.svgs{
+    position: absolute;
+    left:5%;
+    top:5%;
+    z-index: -1;
+    
+}
+@media (max-width:1200px) {
+    .svgs{
+        display: flex;
+        position: unset;
+        margin: 15px 0;
+
+    }
+    
+}
+
+.npm,.react,.js{
+    max-width: 50px;
+    height: 50px;
+    margin: 10px;
+
+}
+
+.npm, .react{
+    max-width: 80px;
+}
+.react{
+    animation: reactA 4s infinite linear;
+}
+
+@keyframes reactA {
+    to{
+        transform: rotate(360deg);
+    }
+    
+}

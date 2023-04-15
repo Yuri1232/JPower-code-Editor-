@@ -20,12 +20,9 @@
     padding: 3rem;
     background-color: #323436 ;
     box-shadow: unset;
-    border-radius: 8px;
     color: white;
 }
-.markdown{
-   padding: 3rem;
-}
+
 
 .wmde-markdown{
     background-color:#d8d9db;
